@@ -1,0 +1,5 @@
+images
+test
+.idea
+scripts/augmentation.py
+scripts/show.py
