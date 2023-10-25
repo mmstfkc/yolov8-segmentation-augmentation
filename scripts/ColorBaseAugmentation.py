@@ -1,5 +1,3 @@
-import os
-
 from BaseAugmentation import BaseAugmentation
 import random
 import shutil
@@ -12,7 +10,7 @@ class ColorBaseAugmentation(BaseAugmentation):
             self,
             base_path,
             destination_path,
-            simple_range=100,
+            simple_range=50,
             min_range=None,
             max_range=None,
             simple_count=1,
@@ -31,31 +29,20 @@ class ColorBaseAugmentation(BaseAugmentation):
             self.count1 = min_count
             self.count2 = max_count
 
-        self.range = range
-        self.min_range = min_range
-        self.max_range = max_range
-
         if simple_range:
-            self.min_range = abs(simple_range) / 100
-            self.max_range = abs(simple_range) / 100
+            self.min_range1 = 0
+            self.max_range1 = simple_range / 2
+
+            self.min_range2 = simple_range / 2
+            self.max_range2 = simple_range
         else:
-            self.min_range = abs(min_range)
-            self.max_range = abs(max_range)
+            min_range, max_range = self.check_min_max_value(max_range, min_range)
 
-        self.min_range, self.max_range = self.check_min_max_value(self.max_range, self.min_range)
+            self.min_range1 = min_range
+            self.max_range1 = (min_range + max_range) / 2
 
-        if range == 1:
-            self.min_range = 1
-            self.max_range = 1
-
-            self.min_range2 = 1
-            self.max_range2 = 1
-        else:
-            self.min_range1 = self.min_range / 2
-            self.max_range1 = self.max_range / 2
-
-            self.min_range2 = self.max_range1
-            self.max_range2 = self.max_range
+            self.min_range2 = (min_range + max_range) / 2
+            self.max_range2 = max_range
 
         self.normalize_min_max_range()
 
@@ -82,16 +69,12 @@ class ColorBaseAugmentation(BaseAugmentation):
         image_paths = self.get_images_from_file()
 
         for image_path in image_paths:
-            asdfg = 0
+
             for _ in range(self.count1):
-                print(f'Part1 {self.count1} - {asdfg} - {image_path}')
-                asdfg += 1
                 file_name, new_file_name = self.image_process(image_path, 1)
                 self.copy_txt(file_name, new_file_name)
 
             for _ in range(self.count2):
-                print(f'Part2 {self.count2} - {asdfg} - {image_path}')
-                asdfg += 1
                 file_name, new_file_name = self.image_process(image_path, 2)
                 self.copy_txt(file_name, new_file_name)
 
