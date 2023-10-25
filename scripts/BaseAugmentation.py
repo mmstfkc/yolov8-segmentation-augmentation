@@ -4,22 +4,23 @@ import os
 
 class BaseAugmentation:
     def __init__(self, base_path, destination_path):
-        self.base_image_path = f'{base_path}images/'
-        self.base_label_path = f'{base_path}labels/'
-        self.destination_image_path = f'{destination_path}images/'
-        self.destination_label_path = f'{destination_path}labels/'
+        self.base_image_path = os.path.join(base_path, 'images/')
+        self.base_label_path = os.path.join(base_path, 'labels/')
+
+        self.destination_image_path = os.path.join(destination_path, 'images/')
+        self.destination_label_path = os.path.join(destination_path, 'labels/')
+
         self.methodName = None
 
-        os.makedirs(f'{destination_path}images/', exist_ok=True)
-        os.makedirs(f'{destination_path}labels/', exist_ok=True)
+        os.makedirs(self.destination_image_path, exist_ok=True)
+        os.makedirs(self.destination_label_path, exist_ok=True)
 
     @staticmethod
     def check_min_max_value(value1, value2):
         return (value2, value1) if value1 > value2 else (value1, value2)
 
-    @staticmethod
-    def get_new_name_format(file_name, method, rate):
-        return f'{file_name}-{method}-{rate}'
+    def get_new_name_format(self, file_name, rate):
+        return f'{file_name}-{str(self.methodName).lower()}-{rate}'
 
     def get_image_and_info(self, image_path):
         image = cv2.imread(self.base_image_path + image_path)

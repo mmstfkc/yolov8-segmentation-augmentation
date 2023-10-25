@@ -75,7 +75,6 @@ class Flip(BaseAugmentation):
             image, file_name, file_extension = self.get_image_and_info(image_path)
             new_file_name = self.get_new_name_format(
                 file_name,
-                self.methodName,
                 str(self.flip_names[self.flip_type]).lower().replace(' ', '-')
             )
 
