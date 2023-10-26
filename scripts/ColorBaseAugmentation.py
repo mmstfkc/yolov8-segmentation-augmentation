@@ -126,14 +126,12 @@ class ColorBaseAugmentation(BaseAugmentation):
 
     def create_multiple_image(self):
         image_paths = self.get_images_from_file()
-        image_path = image_paths[0]
 
-        image, file_name, file_extension = self.get_image_and_info(image_path)
-        converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        for i in range(1000):
+            image, file_name, file_extension = self.get_image_and_info(image_paths[0])
 
-        for i in range(100):
-            counter = (i + 1) * 0.1  # 1.0 artırarak farklı değerler elde edin
-            self.image_create_and_save(converted_image, file_name, file_extension, counter)
+            converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+            self.image_create_and_save(converted_image, file_name, file_extension, i / 100)
 
     def info(self):
         print(f'{self.methodName} process starting...')
