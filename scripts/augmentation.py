@@ -53,9 +53,10 @@ if __name__ == "__main__":
         flip = Flip(base_path, destination_path, i)
         flip.process()
 
-    base_file_count = len([i for i in os.listdir(f'{base_path}images') if i.endswith('jpg') or i.endswith('jpeg')])
+    base_file_count = len(
+        [i for i in os.listdir(os.path.join(base_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
     destination_file_count = len(
-        [i for i in os.listdir(f'{destination_path}images') if i.endswith('jpg') or i.endswith('jpeg')])
+        [i for i in os.listdir(os.path.join(destination_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
 
     file_count = (base_file_count * ((4 * count) + 1)) + (base_file_count * 3)
 
