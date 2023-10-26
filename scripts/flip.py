@@ -8,7 +8,7 @@ class Flip(BaseAugmentation):
         super().__init__(base_path, destination_path)
 
         self.flip_names = ['Vertical', 'Horizontal', 'Vertical And Horizontal']
-        self.flip_type = flip_type
+        self.flip_type = flip_type % 3
         self.methodName = 'Flip'
 
     # The location where we wrote the flipped data to a new text file.
