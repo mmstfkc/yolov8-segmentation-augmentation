@@ -1,5 +1,4 @@
 import os
-
 from saturation import Saturation
 from flip import Flip
 from brightness import Brightness
@@ -9,7 +8,6 @@ from exposure import Exposure
 if __name__ == "__main__":
     base_path = "base_path"
     destination_path = "destination_path"
-
     count = 10
 
     saturation = Saturation(
