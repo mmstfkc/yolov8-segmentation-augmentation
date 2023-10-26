@@ -1,6 +1,5 @@
 from BaseAugmentation import BaseAugmentation
 import random
-import shutil
 import numpy as np
 import cv2
 
@@ -10,10 +9,10 @@ class ColorBaseAugmentation(BaseAugmentation):
             self,
             base_path,
             destination_path,
-            simple_range=50,
+            simple_range=None,
             min_range=None,
             max_range=None,
-            simple_count=1,
+            simple_count=None,
             min_count=None,
             max_count=None,
     ):
@@ -59,37 +58,41 @@ class ColorBaseAugmentation(BaseAugmentation):
             pass
 
     def get_range_rate(self, part=None):
+        after_dot = 4
         if part == 1:
-            return round(random.uniform(self.min_range1, self.max_range1), 2)
+            return round(random.uniform(self.min_range1, self.max_range1), after_dot)
         else:
-            return round(random.uniform(self.min_range2, self.max_range2), 2)
+            return round(random.uniform(self.min_range2, self.max_range2), after_dot)
 
     def process(self):
-        self.info()
+        # self.info()
         image_paths = self.get_images_from_file()
 
         for image_path in image_paths:
+            image, file_name, file_extension = self.get_image_and_info(image_path)
+
+            # Copy original file
+            cv2.imwrite(f'{self.destination_image_path}{file_name}.{file_extension}', image)
+            self.copy_txt(file_name, file_name)
 
             for _ in range(self.count1):
-                file_name, new_file_name = self.image_process(image_path, 1)
+                new_file_name = self.image_process(image, file_name, file_extension, 1)
                 self.copy_txt(file_name, new_file_name)
 
             for _ in range(self.count2):
-                file_name, new_file_name = self.image_process(image_path, 2)
+                new_file_name = self.image_process(image, file_name, file_extension, 2)
                 self.copy_txt(file_name, new_file_name)
 
         print(f"{self.methodName} process is completed.")
         print('*' * 100)
 
-    def image_process(self, image_path, part):
-        image, file_name, file_extension = self.get_image_and_info(image_path)
+    def image_process(self, image, file_name, file_extension, part):
+
         factor_rate = self.get_range_rate(part)
 
         # Convert image from BGR to HSL color space
         converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        new_file_name = self.image_create_and_save(converted_image, file_name, file_extension, factor_rate)
-
-        return file_name, new_file_name
+        return self.image_create_and_save(converted_image, file_name, file_extension, factor_rate)
 
     def image_create_and_save(self, converted_image, file_name, file_extension, factor_rate):
         if self.methodName == 'Saturation':
@@ -121,17 +124,15 @@ class ColorBaseAugmentation(BaseAugmentation):
 
         return image
 
-    def copy_txt(self, file_name, new_file_name):
-        shutil.copy(f'{self.base_label_path + file_name}.txt', f'{self.destination_label_path + new_file_name}.txt')
-
     def create_multiple_image(self):
         image_paths = self.get_images_from_file()
 
-        for i in range(1000):
-            image, file_name, file_extension = self.get_image_and_info(image_paths[0])
+        for image_path in image_paths:
+            for i in range(1000):
+                image, file_name, file_extension = self.get_image_and_info(image_path)
 
-            converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-            self.image_create_and_save(converted_image, file_name, file_extension, i / 100)
+                converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+                self.image_create_and_save(converted_image, file_name, file_extension, i / 100)
 
     def info(self):
         print(f'{self.methodName} process starting...')

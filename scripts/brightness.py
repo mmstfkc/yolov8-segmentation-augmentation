@@ -6,10 +6,10 @@ class Brightness(ColorBaseAugmentation):
     def __init__(self,
                  base_path,
                  destination_path,
-                 brightness=1,
+                 brightness=None,
                  min_brightness=None,
                  max_brightness=None,
-                 count=1,
+                 count=None,
                  min_brightness_count=None,
                  max_brightness_count=None,
                  ):
@@ -32,10 +32,10 @@ if __name__ == "__main__":
 
     parser.add_argument("--base_path", required=True)
     parser.add_argument("--destination_path", required=True)
-    parser.add_argument("--brightness", required=False, default=1)
+    parser.add_argument("--brightness", required=False, default=None)
     parser.add_argument("--min_brightness", required=False, default=None)
     parser.add_argument("--max_brightness", required=False, default=None)
-    parser.add_argument("--count", required=False, default=1)
+    parser.add_argument("--count", required=False, default=None)
     parser.add_argument("--min_brightness_count", required=False, default=None)
     parser.add_argument("--max_brightness_count", required=False, default=None)
 

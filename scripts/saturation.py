@@ -6,10 +6,10 @@ class Saturation(ColorBaseAugmentation):
     def __init__(self,
                  base_path,
                  destination_path,
-                 saturation=1,
+                 saturation=None,
                  min_saturation=None,
                  max_saturation=None,
-                 count=1,
+                 count=None,
                  min_saturation_count=None,
                  max_saturation_count=None,
                  ):
@@ -32,10 +32,10 @@ if __name__ == "__main__":
 
     parser.add_argument("--base_path", required=True)
     parser.add_argument("--destination_path", required=True)
-    parser.add_argument("--saturation", required=False, default=1)
+    parser.add_argument("--saturation", required=False, default=None)
     parser.add_argument("--min_saturation", required=False, default=None)
     parser.add_argument("--max_saturation", required=False, default=None)
-    parser.add_argument("--count", required=False, default=1)
+    parser.add_argument("--count", required=False, default=None)
     parser.add_argument("--min_saturation_count", required=False, default=None)
     parser.add_argument("--max_saturation_count", required=False, default=None)
 

@@ -6,10 +6,10 @@ class Exposure(ColorBaseAugmentation):
     def __init__(self,
                  base_path,
                  destination_path,
-                 exposure=1,
+                 exposure=None,
                  min_exposure=None,
                  max_exposure=None,
-                 count=1,
+                 count=None,
                  min_exposure_count=None,
                  max_exposure_count=None,
                  ):
@@ -32,10 +32,10 @@ if __name__ == "__main__":
 
     parser.add_argument("--base_path", required=True)
     parser.add_argument("--destination_path", required=True)
-    parser.add_argument("--exposure", required=False, default=1)
+    parser.add_argument("--exposure", required=False, default=None)
     parser.add_argument("--min_exposure", required=False, default=None)
     parser.add_argument("--max_exposure", required=False, default=None)
-    parser.add_argument("--count", required=False, default=1)
+    parser.add_argument("--count", required=False, default=None)
     parser.add_argument("--min_exposure_count", required=False, default=None)
     parser.add_argument("--max_exposure_count", required=False, default=None)
 

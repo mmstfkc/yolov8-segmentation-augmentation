@@ -1,5 +1,6 @@
 import cv2
 import os
+import shutil
 
 
 class BaseAugmentation:
@@ -29,9 +30,10 @@ class BaseAugmentation:
         return image, file_name, image_extension[1:]
 
     def get_images_from_file(self):
-        images = [f for f in os.listdir(self.base_image_path) if f.endswith((".jpg", ".jpeg"))]
-        print(f'{len(images)} image.')
-        return images
+        return [f for f in os.listdir(self.base_image_path) if f.endswith((".jpg", ".jpeg"))]
 
     def save_image(self, new_file_name, file_extension, new_image):
         cv2.imwrite(os.path.join(self.destination_image_path, f"{new_file_name}.{file_extension}"), new_image)
+
+    def copy_txt(self, file_name, new_file_name):
+        shutil.copy(f'{self.base_label_path + file_name}.txt', f'{self.destination_label_path + new_file_name}.txt')

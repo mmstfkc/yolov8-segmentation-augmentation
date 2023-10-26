@@ -11,10 +11,6 @@ class Flip(BaseAugmentation):
         self.flip_type = flip_type
         self.methodName = 'Flip'
 
-        print(f'{self.methodName} by {self.flip_names[self.flip_type]} process started...')
-        self.main()
-        print(f'{self.methodName} by {self.flip_names[self.flip_type]} process competed.')
-
     # The location where we wrote the flipped data to a new text file.
     def save_new_txt(self, new_file_name, flipped_segmentation_data):
         with open(f'{self.destination_label_path + new_file_name}.txt', "w") as output_file:
@@ -68,7 +64,9 @@ class Flip(BaseAugmentation):
 
         return flipped_image
 
-    def main(self):
+    def process(self):
+        print(f'{self.methodName} by {self.flip_names[self.flip_type]} process started...')
+
         image_paths = self.get_images_from_file()
 
         for image_path in image_paths:
@@ -82,6 +80,11 @@ class Flip(BaseAugmentation):
 
             flipped_image = self.create_flipped_image(image)
             self.save_image(new_file_name, file_extension, flipped_image)
+
+            self.save_image(file_name, file_extension, image)
+            self.copy_txt(file_name, file_name)
+
+        print(f'{self.methodName} by {self.flip_names[self.flip_type]} process competed.')
 
 
 if __name__ == "__main__":
