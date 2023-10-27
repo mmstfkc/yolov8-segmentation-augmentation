@@ -68,10 +68,27 @@ class BaseAugmentation:
                 self.update_base_destination_path()
                 self.process()
 
+                if is_last:
+                    self.copy_folder(self.destination_path, self.non_mixed_destination_path)
+                    shutil.rmtree(self.destination_path)
+                    self.copy_folder(self.non_mixed_base_path, self.non_mixed_destination_path)
                 return self
+            else:
+                return None
         else:
             print('None', self.methodName, self.mix_deep_rate)
             self.destination_path = os.path.join(self.destination_path, f'm/{str(self.mix_deep_rate)}')
             self.update_base_destination_path()
             self.process()
             return self
+
+    @staticmethod
+    def copy_folder(source, destination):
+        for folder, sub_folder, files in os.walk(source):
+            for file in files:
+                file_path = os.path.join(folder, file)
+
+                destination_file_path = os.path.join(destination, os.path.relpath(file_path, source))
+                os.makedirs(os.path.dirname(destination_file_path), exist_ok=True)
+
+                shutil.copy2(file_path, destination_file_path)
