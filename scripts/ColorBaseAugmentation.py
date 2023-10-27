@@ -72,8 +72,8 @@ class ColorBaseAugmentation(BaseAugmentation):
             image, file_name, file_extension = self.get_image_and_info(image_path)
 
             # Copy original file
-            cv2.imwrite(f'{self.destination_image_path}{file_name}.{file_extension}', image)
-            self.copy_txt(file_name, file_name)
+            # cv2.imwrite(f'{self.destination_image_path}{file_name}.{file_extension}', image)
+            # self.copy_txt(file_name, file_name)
 
             for _ in range(self.count1):
                 new_file_name = self.image_process(image, file_name, file_extension, 1)

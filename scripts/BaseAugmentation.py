@@ -5,6 +5,13 @@ import shutil
 
 class BaseAugmentation:
     def __init__(self, base_path, destination_path):
+        self.base_path = base_path
+        self.destination_path = destination_path
+
+        self.non_mixed_base_path = base_path
+        self.non_mixed_destination_path = destination_path
+        self.mix_deep_rate = 0
+
         self.base_image_path = os.path.join(base_path, 'images/')
         self.base_label_path = os.path.join(base_path, 'labels/')
 
@@ -12,6 +19,16 @@ class BaseAugmentation:
         self.destination_label_path = os.path.join(destination_path, 'labels/')
 
         self.methodName = None
+
+        os.makedirs(self.destination_image_path, exist_ok=True)
+        os.makedirs(self.destination_label_path, exist_ok=True)
+
+    def update_base_destination_path(self):
+        self.base_image_path = os.path.join(self.base_path, 'images/')
+        self.base_label_path = os.path.join(self.base_path, 'labels/')
+
+        self.destination_image_path = os.path.join(self.destination_path, 'images/')
+        self.destination_label_path = os.path.join(self.destination_path, 'labels/')
 
         os.makedirs(self.destination_image_path, exist_ok=True)
         os.makedirs(self.destination_label_path, exist_ok=True)
@@ -37,3 +54,24 @@ class BaseAugmentation:
 
     def copy_txt(self, file_name, new_file_name):
         shutil.copy(f'{self.base_label_path + file_name}.txt', f'{self.destination_label_path + new_file_name}.txt')
+
+    def process(self):
+        pass
+
+    def mixin(self, classes=None, is_last=False):
+        if classes:
+            if isinstance(classes, BaseAugmentation):
+                self.mix_deep_rate += classes.mix_deep_rate + 1
+                print('Not None', self.methodName, self.mix_deep_rate)
+                self.base_path = classes.destination_path[:-1] + str(self.mix_deep_rate - 1)
+                self.destination_path = classes.destination_path[:-1] + str(self.mix_deep_rate)
+                self.update_base_destination_path()
+                self.process()
+
+                return self
+        else:
+            print('None', self.methodName, self.mix_deep_rate)
+            self.destination_path = os.path.join(self.destination_path, f'm/{str(self.mix_deep_rate)}')
+            self.update_base_destination_path()
+            self.process()
+            return self

@@ -6,9 +6,9 @@ from hue import Hue
 from exposure import Exposure
 
 if __name__ == "__main__":
-    base_path = "base_path"
-    destination_path = "destination_path"
-    count = 10
+    base_path = "/Users/mustafakoc/Desktop/yolov8-segmentation-augmentation/images"
+    destination_path = "/Users/mustafakoc/Desktop/yolov8-segmentation-augmentation/images2"
+    count = 2
 
     saturation = Saturation(
         base_path,
@@ -42,23 +42,24 @@ if __name__ == "__main__":
         count=count
     )
 
-    brightness.process()
-    saturation.process()
-    hue.process()
-    exposure.process()
+    brightness.mixin(saturation.mixin(hue.mixin(exposure.mixin())), True)
+    # brightness.process()
+    # saturation.process()
+    # hue.process()
+    # exposure.process()
 
-    for i in range(3):
-        flip = Flip(base_path, destination_path, i)
-        flip.process()
+    # for i in range(3):
+    #    flip = Flip(base_path, destination_path, i)
+    #    flip.process()
 
-    base_file_count = len(
-        [i for i in os.listdir(os.path.join(base_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
-    destination_file_count = len(
-        [i for i in os.listdir(os.path.join(destination_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
+    # base_file_count = len(
+    #    [i for i in os.listdir(os.path.join(base_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
+    # destination_file_count = len(
+    #    [i for i in os.listdir(os.path.join(destination_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
 
-    file_count = (base_file_count * ((4 * count) + 1)) + (base_file_count * 3)
+    # file_count = (base_file_count * ((4 * count) + 1)) + (base_file_count * 3)
 
-    print()
-    print(f'Base file count:{base_file_count}.')
-    print(f'Destination file count:{destination_file_count}.')
-    print(f'Olması gereken sayı:{file_count}')
+    # print()
+    # print(f'Base file count:{base_file_count}.')
+    # print(f'Destination file count:{destination_file_count}.')
+    # print(f'Olması gereken sayı:{file_count}')
