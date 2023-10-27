@@ -42,9 +42,10 @@ if __name__ == "__main__":
         count=count
     )
 
-    # brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
-    # flip = Flip(base_path, destination_path, 1)
-    # brightness.mixin(flip.mixin(), True)
+    brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
+    flip = Flip(base_path, destination_path, 1)
+    brightness.mix(flip.mix(), True)
+
     # brightness.process()
     # saturation.process()
     # hue.process()
@@ -53,15 +54,3 @@ if __name__ == "__main__":
     # for i in range(3):
     #    flip = Flip(base_path, destination_path, i)
     #    flip.process()
-
-    # base_file_count = len(
-    #    [i for i in os.listdir(os.path.join(base_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
-    # destination_file_count = len(
-    #    [i for i in os.listdir(os.path.join(destination_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
-
-    # file_count = (base_file_count * ((4 * count) + 1)) + (base_file_count * 3)
-
-    # print()
-    # print(f'Base file count:{base_file_count}.')
-    # print(f'Destination file count:{destination_file_count}.')
-    # print(f'Olması gereken sayı:{file_count}')
