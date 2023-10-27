@@ -55,12 +55,12 @@ oluşturur.
 ## Mix Örnek Kullanımı
 Birden fazla yöntemi bir arada kullanmak istiyorsanız, kodunuzu şu şekilde yazabilirsiniz:
 
-```
+```python
 brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), True)
 ```
 Oluşacak görselin örnek ismi şu şekilde olacaktır:
 
-```
+```bash
 image1-exposure-0.9358-hue-0.915-saturation-1.0685-brightness-0.9676.jpg
 ```
 Mix fonksiyonunun 3 parametresi mevcuttur:
