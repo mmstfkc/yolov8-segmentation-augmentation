@@ -1,4 +1,3 @@
-import os
 from saturation import Saturation
 from flip import Flip
 from brightness import Brightness
@@ -6,8 +5,8 @@ from hue import Hue
 from exposure import Exposure
 
 if __name__ == "__main__":
-    base_path = "/Users/mustafakoc/Desktop/yolov8-segmentation-augmentation/images"
-    destination_path = "/Users/mustafakoc/Desktop/yolov8-segmentation-augmentation/images2"
+    base_path = "base_path"
+    destination_path = "destination_path"
     count = 2
 
     saturation = Saturation(
@@ -42,15 +41,23 @@ if __name__ == "__main__":
         count=count
     )
 
-    brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
-    flip = Flip(base_path, destination_path, 1)
-    brightness.mix(flip.mix(), True)
+    # Mixing using example1
+    # brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
 
+    # Mixing using example2
+    flip = Flip(base_path, destination_path, 1)
+    # brightness.mix(flip.mix(), True)
+
+    # One Method using example1
     # brightness.process()
     # saturation.process()
     # hue.process()
     # exposure.process()
 
+    # One Method using example2
+    # 0 => Vertical
+    # 1 => Horizontal
+    # 2 => Vertical And Horizontal
     # for i in range(3):
     #    flip = Flip(base_path, destination_path, i)
     #    flip.process()
