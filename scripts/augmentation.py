@@ -43,6 +43,8 @@ if __name__ == "__main__":
     )
 
     brightness.mixin(saturation.mixin(hue.mixin(exposure.mixin())), True)
+    # flip = Flip(base_path, destination_path, 1)
+    # brightness.mixin(flip.mixin(), True)
     # brightness.process()
     # saturation.process()
     # hue.process()
