@@ -81,9 +81,6 @@ class Flip(BaseAugmentation):
             flipped_image = self.create_flipped_image(image)
             self.save_image(new_file_name, file_extension, flipped_image)
 
-            # self.save_image(file_name, file_extension, image)
-            # self.copy_txt(file_name, file_name)
-
         print(f'{self.methodName} by {self.flip_names[self.flip_type]} process competed.')
 
 
