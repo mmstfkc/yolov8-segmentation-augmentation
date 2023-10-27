@@ -1,4 +1,3 @@
-import os
 from saturation import Saturation
 from flip import Flip
 from brightness import Brightness
@@ -8,7 +7,7 @@ from exposure import Exposure
 if __name__ == "__main__":
     base_path = "base_path"
     destination_path = "destination_path"
-    count = 10
+    count = 2
 
     saturation = Saturation(
         base_path,
@@ -42,23 +41,23 @@ if __name__ == "__main__":
         count=count
     )
 
-    brightness.process()
-    saturation.process()
-    hue.process()
-    exposure.process()
+    # Mixing using example1
+    # brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
 
-    for i in range(3):
-        flip = Flip(base_path, destination_path, i)
-        flip.process()
+    # Mixing using example2
+    flip = Flip(base_path, destination_path, 1)
+    # brightness.mix(flip.mix(), True)
 
-    base_file_count = len(
-        [i for i in os.listdir(os.path.join(base_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
-    destination_file_count = len(
-        [i for i in os.listdir(os.path.join(destination_path, 'images')) if i.endswith('jpg') or i.endswith('jpeg')])
+    # One Method using example1
+    # brightness.process()
+    # saturation.process()
+    # hue.process()
+    # exposure.process()
 
-    file_count = (base_file_count * ((4 * count) + 1)) + (base_file_count * 3)
-
-    print()
-    print(f'Base file count:{base_file_count}.')
-    print(f'Destination file count:{destination_file_count}.')
-    print(f'Olması gereken sayı:{file_count}')
+    # One Method using example2
+    # 0 => Vertical
+    # 1 => Horizontal
+    # 2 => Vertical And Horizontal
+    # for i in range(3):
+    #    flip = Flip(base_path, destination_path, i)
+    #    flip.process()
