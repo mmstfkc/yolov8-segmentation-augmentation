@@ -33,11 +33,9 @@ base_path/
 
 1. Bu repo'yu klonlayın veya gerektiğinde indirin.
 
-2. YOLOv8 modelinizin kurulu olduğundan ve çalıştığından emin olun.
+2. "base_path" klasörüne orijinal görüntüleri ve etiket dosyalarını yerleştirin.
 
-3. "base_path" klasörüne orijinal görüntüleri ve etiket dosyalarını yerleştirin.
-
-4. Ana dizinde bu komut dosyasını çalıştırın:
+3. Ana dizinde bu komut dosyasını çalıştırın:
 
 ```
 python augmentation.py

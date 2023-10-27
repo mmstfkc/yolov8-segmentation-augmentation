@@ -32,9 +32,8 @@ The project expects the following file structure:
 ## Usage
 
 1. Clone this repository or download it as needed.
-2. Ensure that your YOLOv8 model is installed and operational.
-3. Place the original image files and label files in the "base_path" folder.
-4. Run this command script in the main directory:
+2. Place the original image files and label files in the "base_path" folder.
+3. Run this command script in the main directory:
 
 ```bash
     python augmentation.py
