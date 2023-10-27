@@ -11,6 +11,7 @@ class BaseAugmentation:
         self.non_mixed_base_path = base_path
         self.non_mixed_destination_path = destination_path
         self.mix_deep_rate = 0
+        self.total_count = 0
 
         self.base_image_path = os.path.join(base_path, 'images/')
         self.base_label_path = os.path.join(base_path, 'labels/')
@@ -58,27 +59,34 @@ class BaseAugmentation:
     def process(self):
         pass
 
-    def mixin(self, classes=None, is_last=False):
+    def mix(self, classes=None, is_last=False, count=None):
+        if count is not None:
+            self.total_count = count
         if classes:
-            if isinstance(classes, BaseAugmentation):
-                self.mix_deep_rate += classes.mix_deep_rate + 1
-                self.base_path = classes.destination_path[:-1] + str(self.mix_deep_rate - 1)
-                self.destination_path = classes.destination_path[:-1] + str(self.mix_deep_rate)
-                self.update_base_destination_path()
-                self.process()
+            return (
+                self.mixing(classes, is_last)
+                if isinstance(classes, BaseAugmentation)
+                else None
+            )
+        self.destination_path = os.path.join(self.destination_path, f'm/{str(self.mix_deep_rate)}')
+        self.update_base_destination_path()
+        self.process()
+        return self
 
-                if is_last:
-                    self.copy_folder(self.destination_path)
-                    shutil.rmtree(self.destination_path)
-                    self.copy_folder(self.non_mixed_base_path)
-                return self
-            else:
-                return None
-        else:
-            self.destination_path = os.path.join(self.destination_path, f'm/{str(self.mix_deep_rate)}')
-            self.update_base_destination_path()
-            self.process()
-            return self
+    def mixing(self, classes, is_last):
+        self.mix_deep_rate += classes.mix_deep_rate + 1
+        self.base_path = classes.destination_path[:-1] + str(self.mix_deep_rate - 1)
+        self.destination_path = classes.destination_path[:-1] + str(self.mix_deep_rate)
+        self.update_base_destination_path()
+        self.process()
+
+        if is_last:
+            self.copy_folder(self.destination_path)
+            shutil.rmtree(classes.destination_path[:-1])
+
+            # Copy original files
+            self.copy_folder(self.non_mixed_base_path)
+        return self
 
     def copy_folder(self, source):
         for folder, sub_folder, files in os.walk(source):

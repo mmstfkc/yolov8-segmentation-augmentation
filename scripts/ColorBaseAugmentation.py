@@ -28,6 +28,8 @@ class ColorBaseAugmentation(BaseAugmentation):
             self.count1 = min_count
             self.count2 = max_count
 
+        self.total_count = self.count1 + self.count2
+
         if simple_range:
             self.min_range1 = 0
             self.max_range1 = simple_range / 2
@@ -61,8 +63,10 @@ class ColorBaseAugmentation(BaseAugmentation):
         after_dot = 4
         if part == 1:
             return round(random.uniform(self.min_range1, self.max_range1), after_dot)
-        else:
+        elif part == 2:
             return round(random.uniform(self.min_range2, self.max_range2), after_dot)
+        else:
+            return round(random.uniform(self.min_range1, self.max_range2), after_dot)
 
     def process(self):
         # self.info()
@@ -74,20 +78,23 @@ class ColorBaseAugmentation(BaseAugmentation):
             # Copy original file
             # cv2.imwrite(f'{self.destination_image_path}{file_name}.{file_extension}', image)
             # self.copy_txt(file_name, file_name)
+            if self.total_count == 1:
+                for _ in range(self.count1):
+                    new_file_name = self.image_process(image, file_name, file_extension, None)
+                    self.copy_txt(file_name, new_file_name)
+            else:
+                for _ in range(self.count1):
+                    new_file_name = self.image_process(image, file_name, file_extension, 1)
+                    self.copy_txt(file_name, new_file_name)
 
-            for _ in range(self.count1):
-                new_file_name = self.image_process(image, file_name, file_extension, 1)
-                self.copy_txt(file_name, new_file_name)
-
-            for _ in range(self.count2):
-                new_file_name = self.image_process(image, file_name, file_extension, 2)
-                self.copy_txt(file_name, new_file_name)
+                for _ in range(self.count2):
+                    new_file_name = self.image_process(image, file_name, file_extension, 2)
+                    self.copy_txt(file_name, new_file_name)
 
         print(f"{self.methodName} process is completed.")
         print('*' * 100)
 
-    def image_process(self, image, file_name, file_extension, part):
-
+    def image_process(self, image, file_name, file_extension, part=None):
         factor_rate = self.get_range_rate(part)
 
         # Convert image from BGR to HSL color space

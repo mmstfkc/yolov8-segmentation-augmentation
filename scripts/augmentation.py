@@ -42,7 +42,7 @@ if __name__ == "__main__":
         count=count
     )
 
-    brightness.mixin(saturation.mixin(hue.mixin(exposure.mixin())), True)
+    # brightness.mix(saturation.mix(hue.mix(exposure.mix(count=1), count=1), count=1), True)
     # flip = Flip(base_path, destination_path, 1)
     # brightness.mixin(flip.mixin(), True)
     # brightness.process()
