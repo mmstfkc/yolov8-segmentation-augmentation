@@ -2,16 +2,17 @@ GNU GENERAL PUBLIC LICENSE
 Version 3, October 31, 2023
 
 Copyright (c) Muhammet Mustafa KOÇ
-Everyone is permitted to use, modify, reproduce, and distribute this software freely. The software is released for everyone's free use and is provided without any warranties.
 
-For more information about the license, please refer to the GNU General Public License.
+Herkes bu yazılımı özgür bir şekilde kullanma, değiştirme, çoğaltma ve dağıtma hakkına sahiptir. Yazılım, herkesin özgürce kullanımı için yayımlanmış olup ve herhangi bir garanti olmaksızın sunulmaktadır.
 
-When distributing any project in which you use this software or a part of it, you must comply with the following conditions:
+Aşağıdaki şartlara uyulmalıdır:
 
-1. You should include a copy of the original GNU General Public License in all copies of this software.
+1. Bu yazılımın tüm kopyalarında orijinal GNU Genel Kamu Lisansı'nın bir kopyasını eklemelisiniz.
 
-2. If you make any changes or derivative works, you should clearly include an explanation that specifies the date of the changes, the names of the individuals making the changes, and their contact information.
+2. Herhangi bir değişiklik veya türev iş yaparsanız, değişikliklerin tarihini, değişiklikleri yapan kişilerin isimlerini ve iletişim bilgilerini belirten bir açıklamayı açıkça eklemelisiniz.
 
-This software may be freely distributed, used, and modified under the license, but versions of this software under the license can only be distributed under GPL version 3 or later.
+Bu yazılımın lisans altında serbestçe dağıtılmasına, kullanılmasına ve değiştirilmesine izin verilir, ancak bu yazılımın lisans altındaki sürümleri sadece GPL versiyon 3 veya sonraki sürümleri altında dağıtılabilir.
 
-The software is provided "AS IS," without any type of warranty, including, but not limited to, any implied warranties or conditions of merchantability or fitness for a particular purpose, except as otherwise specified. For more information, please refer to the GNU General Public License.
+Yazılım "OLDUĞU GİBİ" sunulmaktadır, herhangi bir türde ve garanti koşulu olmaksızın, zımni garantiler de dahil olmak üzere, açıkça veya zımni hiçbir garanti verilmemektedir, bununla birlikte bununla sınırlı olmamak kaydıyla satılabilirlik veya belirli bir amaca uygunluk garantileri dahil, ancak bununla sınırlı olmamak kaydıyla garanti olmaksızın.
+
+Lisans hakkında daha fazla bilgi için GNU Genel Kamu Lisansı'na başvurun: [GNU GPL metni için URL adresi]
