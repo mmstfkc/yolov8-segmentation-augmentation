@@ -49,10 +49,10 @@ if __name__ == "__main__":
     # brightness.mix(flip.mix(), True)
 
     # One Method using example1
-    brightness.process()
-    saturation.process()
-    hue.process()
-    exposure.process()
+    # brightness.process()
+    # saturation.process()
+    # hue.process()
+    # exposure.process()
 
     # One Method using example2
     # 0 => Vertical
