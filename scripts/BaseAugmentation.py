@@ -67,7 +67,7 @@ class BaseAugmentation:
             self.set_total_count(count)
         if classes:
             return (
-                self.mixing(classes, is_last)
+                self.mixing_process(classes, is_last)
                 if isinstance(classes, BaseAugmentation)
                 else None
             )
@@ -84,7 +84,7 @@ class BaseAugmentation:
         if count % 2 != 0:
             self.count1 += 1
 
-    def mixing(self, classes, is_last):
+    def mixing_process(self, classes, is_last):
         self.mix_deep_rate += classes.mix_deep_rate + 1
         self.base_path = classes.destination_path[:-1] + str(self.mix_deep_rate - 1)
         self.destination_path = classes.destination_path[:-1] + str(self.mix_deep_rate)
