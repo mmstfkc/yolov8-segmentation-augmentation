@@ -13,6 +13,9 @@ class BaseAugmentation:
         self.mix_deep_rate = 0
         self.total_count = 0
 
+        self.count1 = None
+        self.count2 = None
+
         self.base_image_path = os.path.join(base_path, 'images/')
         self.base_label_path = os.path.join(base_path, 'labels/')
 
@@ -61,7 +64,7 @@ class BaseAugmentation:
 
     def mix(self, classes=None, is_last=False, count=None):
         if count is not None:
-            self.total_count = count
+            self.set_total_count(count)
         if classes:
             return (
                 self.mixing(classes, is_last)
@@ -72,6 +75,14 @@ class BaseAugmentation:
         self.update_base_destination_path()
         self.process()
         return self
+
+    def set_total_count(self, count):
+        self.total_count = count
+        self.count1 = count // 2
+        self.count2 = count // 2
+
+        if count % 2 != 0:
+            self.count1 += 1
 
     def mixing(self, classes, is_last):
         self.mix_deep_rate += classes.mix_deep_rate + 1
