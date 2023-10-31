@@ -64,7 +64,8 @@ class BlurryAdnLightCheck:
         class_id = 2
 
         if class_id not in class_ids:
-            return
+            w, h, _ = cv2.imread(image_path).shape
+            return 0, 0, w, h
 
         selected_indices = [i for i, cls_id in enumerate(class_ids) if cls_id == class_id]
 
