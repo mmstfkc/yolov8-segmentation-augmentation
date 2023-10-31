@@ -3,3 +3,4 @@ images
 images2
 .idea
 scripts/show.py
+scripts/yolov8x.pt

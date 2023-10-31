@@ -2,6 +2,7 @@ from BaseAugmentation import BaseAugmentation
 import random
 import numpy as np
 import cv2
+from BlurryAndLightCheck import BlurryAdnLightCheck
 
 
 class ColorBaseAugmentation(BaseAugmentation):
@@ -17,6 +18,9 @@ class ColorBaseAugmentation(BaseAugmentation):
             max_count=None,
     ):
         super().__init__(base_path, destination_path)
+
+        self.blur_light = BlurryAdnLightCheck()
+        self.image_light = None
 
         if simple_count:
             self.count1 = simple_count // 2
@@ -45,28 +49,30 @@ class ColorBaseAugmentation(BaseAugmentation):
             self.min_range2 = (min_range + max_range) / 2
             self.max_range2 = max_range
 
-        self.normalize_min_max_range()
+    def normalize_min_max_range(self, file_name):
+        if self.image_light is None:
+            self.image_light, _ = self.blur_light.image_preprocessing(file_name, self.base_image_path)
 
-    def normalize_min_max_range(self):
-        if self.methodName == 'Saturation':
-            pass
-        elif self.methodName == 'Hue':
-            pass
-        elif self.methodName == 'Exposure':
-            pass
-        elif self.methodName == 'Brightness':
-            pass
-        else:
-            pass
+        min1, max2 = self.min_range1, self.max_range2
 
-    def get_range_rate(self, part=None):
+        if self.image_light == 0:  # Darkness
+            if self.methodName in ['Hue', 'Exposure']:
+                min1 = max(min1, 0.9)
+            elif self.methodName in ['Saturation', 'Brightness']:
+                min1 = max(min1, 0.5)
+
+        return min1, (min1 + max2) / 2, (min1 + max2) / 2, max2
+
+    def get_range_rate(self, file_name, part=None):
+        normalize_min1, normalize_max1, normalize_min2, normalize_max2 = self.normalize_min_max_range(file_name)
         after_dot = 4
+
         if part == 1:
-            return round(random.uniform(self.min_range1, self.max_range1), after_dot)
+            return round(random.uniform(normalize_min1, normalize_max1), after_dot)
         elif part == 2:
-            return round(random.uniform(self.min_range2, self.max_range2), after_dot)
+            return round(random.uniform(normalize_min2, normalize_max2), after_dot)
         else:
-            return round(random.uniform(self.min_range1, self.max_range2), after_dot)
+            return round(random.uniform(normalize_min1, normalize_max2), after_dot)
 
     def process(self):
         # self.info()
@@ -75,28 +81,24 @@ class ColorBaseAugmentation(BaseAugmentation):
         for image_path in image_paths:
             image, file_name, file_extension = self.get_image_and_info(image_path)
 
-            # Copy original file
-            # cv2.imwrite(f'{self.destination_image_path}{file_name}.{file_extension}', image)
-            # self.copy_txt(file_name, file_name)
             if self.total_count == 1:
-                for _ in range(self.count1):
-                    new_file_name = self.image_process(image, file_name, file_extension, None)
-                    self.copy_txt(file_name, new_file_name)
+                self.main_process(image, file_name, file_extension, 1)
             else:
-                for _ in range(self.count1):
-                    new_file_name = self.image_process(image, file_name, file_extension, 1)
-                    self.copy_txt(file_name, new_file_name)
+                self.main_process(image, file_name, file_extension, self.count1, 1)
 
-                for _ in range(self.count2):
-                    new_file_name = self.image_process(image, file_name, file_extension, 2)
-                    self.copy_txt(file_name, new_file_name)
+                self.main_process(image, file_name, file_extension, self.count2, 2)
+            self.image_light = None
 
         print(f"{self.methodName} process is completed.")
         print('*' * 100)
 
-    def image_process(self, image, file_name, file_extension, part=None):
-        factor_rate = self.get_range_rate(part)
+    def main_process(self, image, file_name, file_extension, count, part=None):
+        for _ in range(count):
+            factor_rate = self.get_range_rate(f'{file_name}.{file_extension}', part)
+            new_file_name = self.image_process(image, file_name, file_extension, factor_rate)
+            self.copy_txt(file_name, new_file_name)
 
+    def image_process(self, image, file_name, file_extension, factor_rate):
         # Convert image from BGR to HSL color space
         converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         return self.image_create_and_save(converted_image, file_name, file_extension, factor_rate)
@@ -135,7 +137,7 @@ class ColorBaseAugmentation(BaseAugmentation):
         image_paths = self.get_images_from_file()
 
         for image_path in image_paths:
-            for i in range(1000):
+            for i in range(500):
                 image, file_name, file_extension = self.get_image_and_info(image_path)
 
                 converted_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)

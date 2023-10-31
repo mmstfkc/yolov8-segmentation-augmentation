@@ -12,32 +12,32 @@ if __name__ == "__main__":
     saturation = Saturation(
         base_path,
         destination_path,
-        min_saturation=0.6,
-        max_saturation=1.6,
+        min_saturation=0.4,
+        max_saturation=2.4,
         count=count
     )
 
     brightness = Brightness(
         base_path,
         destination_path,
-        min_brightness=0.75,
-        max_brightness=1.2,
+        min_brightness=0.2,
+        max_brightness=1.3,
         count=count
     )
 
     hue = Hue(
         base_path,
         destination_path,
-        min_hue=0.9,
-        max_hue=1.1,
+        min_hue=0.8,
+        max_hue=1.4,
         count=count
     )
 
     exposure = Exposure(
         base_path,
         destination_path,
-        min_exposure=0.9,
-        max_exposure=1.0,
+        min_exposure=0.4,
+        max_exposure=1.1,
         count=count
     )
 
@@ -49,10 +49,10 @@ if __name__ == "__main__":
     # brightness.mix(flip.mix(), True)
 
     # One Method using example1
-    # brightness.process()
-    # saturation.process()
-    # hue.process()
-    # exposure.process()
+    brightness.process()
+    saturation.process()
+    hue.process()
+    exposure.process()
 
     # One Method using example2
     # 0 => Vertical
