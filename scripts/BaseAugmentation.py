@@ -57,7 +57,10 @@ class BaseAugmentation:
         cv2.imwrite(os.path.join(self.destination_image_path, f"{new_file_name}.{file_extension}"), new_image)
 
     def copy_txt(self, file_name, new_file_name):
-        shutil.copy(f'{self.base_label_path + file_name}.txt', f'{self.destination_label_path + new_file_name}.txt')
+        try:
+            shutil.copy(f'{self.base_label_path + file_name}.txt', f'{self.destination_label_path + new_file_name}.txt')
+        except:
+            pass
 
     def process(self):
         pass
