@@ -51,7 +51,7 @@ class ColorBaseAugmentation(BaseAugmentation):
 
     def normalize_min_max_range(self, file_name):
         if self.image_light is None:
-            self.image_light, _ = self.blur_light.image_preprocessing(file_name, self.base_image_path)
+            self.image_light, _ = self.blur_light.image_preprocessing(file_name, self.base_image_path, self.methodName)
 
         min1, max2 = self.min_range1, self.max_range2
 

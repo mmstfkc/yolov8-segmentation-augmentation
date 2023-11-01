@@ -54,7 +54,11 @@ class BlurryAdnLightCheck:
             return 1  # Normal
 
     @staticmethod
-    def largest_vehicle_detection(image_path):
+    def largest_vehicle_detection(image_path, method_name):
+        if method_name != 'Brightness':
+            w, h, _ = cv2.imread(image_path).shape
+            return 0, 0, w, h
+
         model = YOLO('yolov8x.pt')
         model_predict = model.predict(image_path)
 
@@ -85,10 +89,10 @@ class BlurryAdnLightCheck:
 
         return map(int, selected_box.data[0][:4])
 
-    def image_preprocessing(self, filename, path):
+    def image_preprocessing(self, filename, path, method_name):
         image_path = os.path.join(path, filename)
 
-        x1, y1, x2, y2 = self.largest_vehicle_detection(image_path)
+        x1, y1, x2, y2 = self.largest_vehicle_detection(image_path, method_name)
 
         gray = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Grayscale image
         p = self.blur_info_img(gray[y1:y2, x1:x2])
