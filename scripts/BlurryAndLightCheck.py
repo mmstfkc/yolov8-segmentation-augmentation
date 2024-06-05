@@ -55,9 +55,9 @@ class BlurryAdnLightCheck:
 
     @staticmethod
     def largest_vehicle_detection(image_path, method_name):
-        if method_name != 'Brightness':
-            w, h, _ = cv2.imread(image_path).shape
-            return 0, 0, w, h
+        #if method_name != 'Brightness':
+        w, h, _ = cv2.imread(image_path).shape
+        return 0, 0, w, h
 
         model = YOLO('yolov8x.pt')
         model_predict = model.predict(image_path)
@@ -65,7 +65,7 @@ class BlurryAdnLightCheck:
         boxes_data = model_predict[0].boxes.cpu().numpy()
         class_ids = model_predict[0].boxes.cls.cpu().numpy()
 
-        class_id = 2
+        class_id = 0
 
         if class_id not in class_ids:
             w, h, _ = cv2.imread(image_path).shape
